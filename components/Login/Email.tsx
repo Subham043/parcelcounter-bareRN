@@ -11,14 +11,14 @@ import { api } from "@/utils/axios"
 import { Spinner } from "../ui/spinner"
 import colors from "tailwindcss/colors"
 import { ErrorMessage } from "@hookform/error-message";
-import { useErrorToast, useSuccessToast } from "@/hooks/useToast"
+import { useToast } from "@/hooks/useToast";
 
 const schema = yup
- .object({
-  email: yup.string().email().required(),
-  password: yup.string().required(),
- })
- .required();
+    .object({
+        email: yup.string().email().required(),
+        password: yup.string().required(),
+    })
+    .required();
 
 
 const LoginWithEmail = () => {
@@ -28,8 +28,7 @@ const LoginWithEmail = () => {
         return !showState
     })
 
-    const {showSuccessToast} = useSuccessToast()
-    const {showErrorToast} = useErrorToast()
+    const { showSuccessToast, showErrorToast } = useToast()
 
     const {
         control,
@@ -44,40 +43,40 @@ const LoginWithEmail = () => {
     const onSubmit = async () => {
         setLoading(true);
         try {
-         const response = await api.post(apiRoutes.login, getValues());
-         showSuccessToast('Logged in seccessfully.');
-         reset({
-          email: "",
-          password: "",
-         });
+            const response = await api.post(apiRoutes.login, getValues());
+            showSuccessToast('Logged in seccessfully.');
+            reset({
+                email: "",
+                password: "",
+            });
         } catch (error: any) {
-         if (error?.response?.data?.message) {
-            showErrorToast(error?.response?.data?.message);
-         }
-         if (error?.response?.data?.errors?.email) {
-          setError("email", {
-           type: "server",
-           message: error?.response?.data?.errors?.email[0],
-          });
-         }
-         if (error?.response?.data?.errors?.password) {
-          setError("password", {
-           type: "server",
-           message: error?.response?.data?.errors?.password[0],
-          });
-         }
+            if (error?.response?.data?.message) {
+                showErrorToast(error?.response?.data?.message);
+            }
+            if (error?.response?.data?.errors?.email) {
+                setError("email", {
+                    type: "server",
+                    message: error?.response?.data?.errors?.email[0],
+                });
+            }
+            if (error?.response?.data?.errors?.password) {
+                setError("password", {
+                    type: "server",
+                    message: error?.response?.data?.errors?.password[0],
+                });
+            }
         } finally {
-         setLoading(false);
+            setLoading(false);
         }
-       };
-    
+    };
+
     return (
         <View className="w-full px-5">
             <View className="w-full">
                 <Controller
                     name="email"
                     control={control}
-                    render={({ field: { onChange, onBlur, value,  }, formState: { errors } }) => (
+                    render={({ field: { onChange, onBlur, value, }, formState: { errors } }) => (
                         <Fragment>
                             <Input
                                 variant="underlined"
@@ -92,20 +91,20 @@ const LoginWithEmail = () => {
                                 name="email"
                                 as={<Text className="text-red-500" />}
                             />
-                        </Fragment>        
+                        </Fragment>
                     )}
                 />
             </View>
             <View className="w-full">
-            <Controller
+                <Controller
                     name="password"
                     control={control}
-                    render={({ field: { onChange, onBlur, value,  }, formState: { errors } }) => (
+                    render={({ field: { onChange, onBlur, value, }, formState: { errors } }) => (
                         <Fragment>
                             <Input variant="underlined" size="md" className="mt-5 border-gray-500" isInvalid={errors.email ? true : false}>
                                 <InputField placeholder="Enter Password" type={showPassword ? "text" : "password"} className="placeholder:text-gray-500" value={value} onBlur={onBlur} onChangeText={onChange} />
                                 <InputSlot className="pr-3" onPress={handleState}>
-                                    <InputIcon as={()=> showPassword ? <Icon name="eye-off-outline" size={24} color="black" /> : <Icon name="eye-outline" size={24} color="black" />} />
+                                    <InputIcon as={() => showPassword ? <Icon name="eye-off-outline" size={24} color="black" /> : <Icon name="eye-outline" size={24} color="black" />} />
                                 </InputSlot>
                             </Input>
                             <ErrorMessage
@@ -113,7 +112,7 @@ const LoginWithEmail = () => {
                                 name="password"
                                 as={<Text className="text-red-500" />}
                             />
-                        </Fragment>        
+                        </Fragment>
                     )}
                 />
             </View>

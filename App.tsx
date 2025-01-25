@@ -8,6 +8,7 @@ import {
 import { useAppState } from "@/hooks/useAppState";
 import { onAppStateChange, queryClient } from "@/constants/QueryClientOptions";
 import RootStack from "./navigation/RootStack";
+import Toast from 'react-native-toast-message';
 
 export default function App() {
   
@@ -19,6 +20,7 @@ export default function App() {
         <NavigationContainer>
           <RootStack />
         </NavigationContainer>
+        <Toast />
       </GluestackUIProvider>
     </QueryClientProvider>
   );
