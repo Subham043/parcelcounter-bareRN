@@ -1,6 +1,6 @@
 import { Input, InputField, InputIcon, InputSlot } from "@/components/ui/input";
 import Icon from 'react-native-vector-icons/Ionicons';
-import { FlatList, TouchableOpacity, View } from "react-native";
+import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useEffect, useState } from "react";
 import debounce from 'lodash.debounce'
@@ -15,12 +15,12 @@ import { useNavigation } from "@react-navigation/native";
 
 function SearchHeader({ searchHandler, backButtonHandler }: { searchHandler: (e: string) => void, backButtonHandler: () => void }) {
   return (
-    <View className="flex-row gap-4 px-4 py-2 w-full bg-white items-center shadow">
+    <View style={styles.searchBarContainer} className="shadow">
       <TouchableOpacity onPressIn={backButtonHandler}>
         <Icon name="arrow-back" size={24} color="black" />
       </TouchableOpacity>
-      <Input className="flex-1">
-        <InputSlot className="pl-3">
+      <Input style={styles.input}>
+        <InputSlot style={styles.inputSlot}>
           <InputIcon as={()=> <Icon name="search" size={24} color="black" />} />
         </InputSlot>
         <InputField placeholder="Search..." onChangeText={searchHandler} autoFocus={true} />
@@ -61,19 +61,17 @@ export default function SearchScreen() {
 
     return (
       <SafeAreaView
-        style={{
-          flex: 1,
-        }}
+        style={styles.container}
       >
         <SearchHeader searchHandler={searchHandler} backButtonHandler={backButtonHandler} />
-        <View className="flex-1 px-4 py-2">
+        <View style={styles.wrapper}>
           <FlatList
             data={data ? data.pages as GlobalSearchType[] : []}
             keyExtractor={(_, index) => index.toString()}
             removeClippedSubviews={true}
             onEndReached={loadMore}
             onEndReachedThreshold={5}
-            contentContainerStyle={{ gap: 10 }}
+            contentContainerStyle={styles.contentContainerStyle}
             showsVerticalScrollIndicator={false}
             renderItem={({ item, index }) => <SearchCard item={item} index={index} />}
             initialNumToRender={8}
@@ -84,3 +82,32 @@ export default function SearchScreen() {
       </SafeAreaView>
     );
   }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    wrapper:{
+      flex: 1,
+      paddingHorizontal: 16,
+      paddingVertical: 8,
+    },
+    searchBarContainer: {
+        flexDirection: 'row',
+        gap: 20,
+        paddingHorizontal: 16,
+        paddingVertical: 8,
+        width: '100%',
+        backgroundColor: 'white',
+        alignItems: 'center',
+    },
+    input:{
+      flex: 1,
+    },
+    inputSlot:{
+      paddingLeft: 12,
+    },
+    contentContainerStyle:{
+      gap: 10,
+    }
+});

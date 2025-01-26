@@ -1,4 +1,4 @@
-import { Image, SafeAreaView, Text, TouchableOpacity, useWindowDimensions, View } from "react-native";
+import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from "react-native";
 import { useState } from "react";
 import LinearGradient from 'react-native-linear-gradient';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
@@ -29,16 +29,15 @@ export default function LoginScreen() {
 
     return (
         <SafeAreaView className="flex-1">
-            <Image source={require("@/assets/images/hero.png")} alt="Auth Background" style={{ width: '100%', height: '100%', resizeMode: 'cover', position: 'absolute', zIndex: -1, objectFit: 'cover', top: 0, left: 0 }} />
+            <Image source={require("@/assets/images/hero.png")} alt="Auth Background" style={styles.backgroundImage} />
             <View className="flex-1 justify-center items-center">
-                <View className=" rounded-lg" style={{ width: '90%' }}>
+                <View style={styles.card}>
                     <LinearGradient
                         colors={['#f5f5f5', '#fafafa', '#ffffff']}
-                        className="w-full rounded-lg"
-                        style={{ paddingVertical: 20, borderWidth: 1, borderColor: '#cccccc', borderRadius: 5 }}
+                        style={styles.linearGradient}
                     >
-                        <Text className="text-2xl text-center font-semibold px-5 mb-10" style={{ paddingHorizontal: 20, marginBottom: 10 }}>LOGIN</Text>
-                        <View className="w-full" style={{ height: 250, width: '100%' }}>
+                        <Text style={styles.heading}>LOGIN</Text>
+                        <View style={styles.tabContainer}>
                             <TabView
                                 navigationState={{ index, routes }}
                                 renderScene={renderScene}
@@ -51,9 +50,9 @@ export default function LoginScreen() {
                                 renderLazyPlaceholder={() => <Spinner size="small" color={colors.gray[500]} />}
                             />
                         </View>
-                        <View className="flex-row justify-between items-center px-5">
-                            <TouchableOpacity><Text className="text-base font-bold">Register</Text></TouchableOpacity>
-                            <TouchableOpacity><Text className="text-base font-bold">Forgot Password?</Text></TouchableOpacity>
+                        <View style={styles.linkContainer}>
+                            <TouchableOpacity><Text style={styles.link}>Register</Text></TouchableOpacity>
+                            <TouchableOpacity><Text style={styles.link}>Forgot Password?</Text></TouchableOpacity>
                         </View>
                     </LinearGradient>
                 </View>
@@ -61,3 +60,59 @@ export default function LoginScreen() {
         </SafeAreaView>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    backgroundImage:{ 
+        width: '100%', 
+        height: '100%',
+        flex: 1, 
+        resizeMode: 'cover', 
+        position: 'absolute', 
+        zIndex: -1, 
+        objectFit: 'cover', 
+        top: 0, 
+        left: 0 
+    },
+    wrapper:{
+        flex: 1, 
+        justifyContent: 'center', 
+        alignItems: 'center'
+    },
+    card:{
+        width: '90%',
+        borderRadius: 8,
+    },
+    linearGradient:{ 
+        paddingVertical: 20, 
+        borderWidth: 1, 
+        borderColor: '#cccccc', 
+        borderRadius: 8, 
+        width: '100%' 
+    },
+    heading:{
+        fontSize: 24,
+        lineHeight: 32,
+        fontWeight: 600,
+        textAlign: 'center',
+        marginBottom: 10,
+        paddingHorizontal: 20
+    },
+    tabContainer:{
+        height: 250, 
+        width: '100%'
+    },
+    linkContainer:{
+        flexDirection: 'row', 
+        justifyContent: 'space-between', 
+        alignItems: 'center', 
+        paddingHorizontal: 20
+    }, 
+    link:{
+        fontSize: 16, 
+        lineHeight: 24,
+        fontWeight: 600
+    }
+});

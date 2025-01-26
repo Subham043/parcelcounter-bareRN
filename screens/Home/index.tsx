@@ -1,17 +1,25 @@
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import HomPageCategories from "@/components/HomPageCategories";
 
 export default function HomeScreen() {
   return (
     <SafeAreaView
-      style={{
-        flex: 1,
-      }}
+      style={styles.container}
     >
-      <View className="flex-1 bg-white">
+      <View style={styles.wrapper}>
         <HomPageCategories />
       </View>
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  wrapper: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+});

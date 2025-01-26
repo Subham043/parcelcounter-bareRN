@@ -6,6 +6,7 @@ import { Image, TouchableOpacity } from 'react-native';
 import { Heading } from '@/components/ui/heading';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
+import { StyleSheet } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,10 +19,9 @@ export default function RootStack() {
         headerLeft: () => <Image
             source={require("@/assets/images/small-logo.png")}
             alt="Logo"
-            className="object-contain"
-            style={{ width: 40, height: 40, marginRight: 5 }}
+            style={styles.image}
         />,
-        headerTitle: () => <Heading size="xl" bold={false} className="font-medium">Parcel Counter</Heading>,
+        headerTitle: () => <Heading size="xl" bold={false} style={styles.text}>Parcel Counter</Heading>,
         headerRight: () => <TouchableOpacity onPressIn={() => { navigation.navigate('Search'); }}>
             <Icon name="search1" size={24} color="black" />
         </TouchableOpacity>,
@@ -40,3 +40,15 @@ export default function RootStack() {
     </Stack.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  image:{
+    width: 40,
+    height: 40,
+    marginRight: 5,
+    objectFit: 'contain'
+  },
+  text:{
+    fontWeight: 500
+  }
+});
