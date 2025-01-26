@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react"
-import { View, Text } from "react-native"
+import { View, Text, StyleSheet } from "react-native"
 import { Input, InputField, InputIcon, InputSlot } from "../ui/input"
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Button, ButtonText } from "../ui/button"
@@ -71,8 +71,8 @@ const LoginWithEmail = () => {
     };
 
     return (
-        <View className="w-full px-5">
-            <View className="w-full">
+        <View style={styles.container}>
+            <View style={styles.inputContainer}>
                 <Controller
                     name="email"
                     control={control}
@@ -82,43 +82,43 @@ const LoginWithEmail = () => {
                                 variant="underlined"
                                 size="md"
                                 isInvalid={errors.email ? true : false}
-                                className="mt-5 border-gray-500"
+                                style={styles.input}
                             >
                                 <InputField placeholder="Enter Email" inputMode="email" className="placeholder:text-gray-500" autoComplete="email" textContentType="emailAddress" value={value} onBlur={onBlur} onChangeText={onChange} />
                             </Input>
                             <ErrorMessage
                                 errors={errors}
                                 name="email"
-                                as={<Text className="text-red-500" />}
+                                as={<Text style={styles.errorText} />}
                             />
                         </Fragment>
                     )}
                 />
             </View>
-            <View className="w-full">
+            <View style={styles.inputContainer}>
                 <Controller
                     name="password"
                     control={control}
                     render={({ field: { onChange, onBlur, value, }, formState: { errors } }) => (
                         <Fragment>
-                            <Input variant="underlined" size="md" className="mt-5 border-gray-500" isInvalid={errors.email ? true : false}>
+                            <Input variant="underlined" size="md" style={styles.input} isInvalid={errors.email ? true : false}>
                                 <InputField placeholder="Enter Password" type={showPassword ? "text" : "password"} className="placeholder:text-gray-500" value={value} onBlur={onBlur} onChangeText={onChange} />
-                                <InputSlot className="pr-3" onPress={handleState}>
+                                <InputSlot style={styles.inputIcon} onPress={handleState}>
                                     <InputIcon as={() => showPassword ? <Icon name="eye-off-outline" size={24} color="black" /> : <Icon name="eye-outline" size={24} color="black" />} />
                                 </InputSlot>
                             </Input>
                             <ErrorMessage
                                 errors={errors}
                                 name="password"
-                                as={<Text className="text-red-500" />}
+                                as={<Text style={styles.errorText} />}
                             />
                         </Fragment>
                     )}
                 />
             </View>
-            <View className="mt-4 flex-row justify-center">
-                <Button size="md" variant="solid" action="secondary" className="w-1/3 bg-black" disabled={loading} onPress={handleSubmit(onSubmit)}>
-                    {loading ? <Spinner size="small" color={colors.gray[100]} /> : <ButtonText className="text-white">LOGIN</ButtonText>}
+            <View style={styles.buttonContainer}>
+                <Button size="md" variant="solid" action="secondary" style={styles.button} disabled={loading} onPress={handleSubmit(onSubmit)}>
+                    {loading ? <Spinner size="small" color={colors.gray[100]} /> : <ButtonText style={styles.buttonText}>LOGIN</ButtonText>}
                 </Button>
             </View>
         </View>
@@ -126,3 +126,35 @@ const LoginWithEmail = () => {
 }
 
 export default LoginWithEmail
+
+const styles = StyleSheet.create({
+    container:{
+        width: '100%',
+        paddingHorizontal: 20
+    },
+    inputContainer:{
+        width: '100%',
+    },
+    input:{
+        marginTop: 20,
+        borderColor: '#6b7280',
+    },
+    inputIcon:{
+        paddingLeft: 12,
+    },
+    errorText:{
+        color: 'red',
+    },
+    buttonContainer:{
+        marginTop: 16,
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+    button:{
+        width: '33.33%',
+        backgroundColor: '#000',
+    },
+    buttonText:{
+        color: '#fff',
+    }
+});

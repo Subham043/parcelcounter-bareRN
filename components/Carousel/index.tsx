@@ -1,4 +1,4 @@
-import { Dimensions, View, StyleSheet, Image } from 'react-native';
+import { Dimensions, View, StyleSheet, Image, ImageSourcePropType } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import React from 'react'
 import {
@@ -14,7 +14,7 @@ configureReanimatedLogger({
 
 export type PhotoType = {
     id: number;
-    uri: any;
+    uri: ImageSourcePropType;
 }
 
 const photos: PhotoType[] = [
@@ -61,18 +61,18 @@ const CarouselCustom = () => {
                 renderItem={({ item, index }) => (
                     <Image
                         source={item.uri}
-                        className='w-full h-full'
+                        style={styles.image}
                         resizeMode="cover"
                         key={index}
                     />
                 )}
             />
-            <View className=' flex-row self-center absolute -bottom-5'>
+            <View style={styles.pagination}>
                 {photos.map((_, i) => (
                     <View
                         key={i}
-                        className='w-2 h-2 rounded-full mx-1 bg-gray-500'
                         style={[
+                            styles.dot,
                             {
                                 opacity: i === index ? 1 : 0.5,
                             },
@@ -91,5 +91,22 @@ const styles = StyleSheet.create({
         width: width, 
         height: width / 2, 
         marginBottom: 20
+    },
+    image:{
+        width: '100%',
+        height: '100%'
+    },
+    pagination:{
+        flexDirection: 'row',
+        alignSelf: 'center',
+        position: 'absolute',
+        bottom: -20
+    },
+    dot:{
+        width: 8,
+        height: 8,
+        borderRadius: 4,
+        backgroundColor: '#6b7280',
+        marginHorizontal: 4
     }
 })

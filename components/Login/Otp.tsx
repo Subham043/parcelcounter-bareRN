@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View } from "react-native"
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { Input, InputField, InputSlot } from "../ui/input"
 import { Button, ButtonText } from "../ui/button"
 import { Fragment, useEffect, useState } from "react"
@@ -158,8 +158,8 @@ const LoginWithOtp = () => {
     }, []);
 
     return (
-        <View className="w-full px-5">
-            <View className="w-full">
+        <View style={styles.container}>
+            <View style={styles.inputContainer}>
                 <Controller
                     name="phone"
                     control={control}
@@ -169,7 +169,7 @@ const LoginWithOtp = () => {
                                 variant="underlined"
                                 size="md"
                                 isInvalid={errors.phone ? true : false}
-                                className="mt-5 border-gray-500"
+                                style={styles.input}
                             >
                                 <InputField
                                     placeholder="Enter Phone" 
@@ -181,27 +181,27 @@ const LoginWithOtp = () => {
                                     onBlur={onBlur} 
                                     onChangeText={(val) => {onChange(val); setValue('phone', val)}} 
                                 />
-                                <InputSlot className="pl-3">
-                                    <TouchableOpacity className="w-auto bg-black px-2 py-1 rounded-lg" disabled={otpLoading} onPress={otpHandleSubmit(onSendOtp)}>
-                                        {otpLoading ? <Spinner size="small" color={colors.gray[100]} /> : <Text className="text-white">Send OTP</Text>}
+                                <InputSlot style={styles.inputIcon}>
+                                    <TouchableOpacity style={styles.otpButton} disabled={otpLoading} onPress={otpHandleSubmit(onSendOtp)}>
+                                        {otpLoading ? <Spinner size="small" color={colors.gray[100]} /> : <Text style={styles.buttonText}>Send OTP</Text>}
                                     </TouchableOpacity>
                                 </InputSlot>
                             </Input>
                             <ErrorMessage
                                 errors={errors}
                                 name="phone"
-                                as={<Text className="text-red-500" />}
+                                as={<Text style={styles.errorText} />}
                             />
                             <ErrorMessage
                                 errors={otpErrors}
                                 name="phone"
-                                as={<Text className="text-red-500" />}
+                                as={<Text style={styles.errorText} />}
                             />
                         </Fragment>
                     )}
                 />
             </View>
-            <View className="w-full">
+            <View style={styles.inputContainer}>
                 <Controller
                     name="otp"
                     control={control}
@@ -211,22 +211,22 @@ const LoginWithOtp = () => {
                                 variant="underlined"
                                 size="md"
                                 isInvalid={errors.otp ? true : false}
-                                className="mt-5 border-gray-500"
+                                style={styles.input}
                             >
                                 <InputField placeholder="Enter OTP" inputMode="numeric" className="placeholder:text-gray-500" autoComplete="sms-otp" textContentType="oneTimeCode" value={value} onBlur={onBlur} onChangeText={onChange} />
                             </Input>
                             <ErrorMessage
                                 errors={errors}
                                 name="otp"
-                                as={<Text className="text-red-500" />}
+                                as={<Text style={styles.errorText} />}
                             />
                         </Fragment>
                     )}
                 />
             </View>
-            <View className="mt-4 flex-row justify-center">
-                <Button size="md" variant="solid" action="secondary" className="w-1/3 bg-black" disabled={loading} onPress={handleSubmit(onSubmit)}>
-                    {loading ? <Spinner size="small" color={colors.gray[100]} /> : <ButtonText className="text-white">LOGIN</ButtonText>}
+            <View style={styles.buttonContainer}>
+                <Button size="md" variant="solid" action="secondary" style={styles.button} disabled={loading} onPress={handleSubmit(onSubmit)}>
+                    {loading ? <Spinner size="small" color={colors.gray[100]} /> : <ButtonText style={styles.buttonText}>LOGIN</ButtonText>}
                 </Button>
             </View>
         </View>
@@ -234,3 +234,42 @@ const LoginWithOtp = () => {
 }
 
 export default LoginWithOtp
+
+const styles = StyleSheet.create({
+    container:{
+        width: '100%',
+        paddingHorizontal: 20
+    },
+    inputContainer:{
+        width: '100%',
+    },
+    input:{
+        marginTop: 20,
+        borderColor: '#6b7280',
+    },
+    inputIcon:{
+        paddingLeft: 12,
+    },
+    errorText:{
+        color: 'red',
+    },
+    buttonContainer:{
+        marginTop: 16,
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+    button:{
+        width: '33.33%',
+        backgroundColor: '#000',
+    },
+    buttonText:{
+        color: '#fff',
+    },
+    otpButton:{
+        width: 'auto',
+        backgroundColor: '#000',
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        borderRadius: 4,
+    }
+});

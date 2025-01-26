@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text } from 'react-native'
+import { StyleSheet, Text } from 'react-native'
 
 type Props = {
     message?: string
@@ -7,8 +7,16 @@ type Props = {
 
 function NoResult({message="No results found"}: Props) {
   return (
-    <Text className="text-center text-lg">{message}</Text>
+    <Text style={styles.text}>{message}</Text>
   )
 }
 
 export default NoResult
+
+const styles = StyleSheet.create({
+    text:{
+        textAlign: 'center',
+        fontSize: 18,
+        lineHeight: 28,
+    }
+});

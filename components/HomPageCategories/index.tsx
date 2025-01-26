@@ -2,7 +2,7 @@ import { getCategoriesQueryOptions } from '@/data/getCategoriesQuery'
 import { CategoryType } from '@/utils/types'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import React from 'react'
-import { FlatList, Text, View, TouchableOpacity } from 'react-native'
+import { FlatList, Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 import NoResult from '../NoResult'
 import CategoryCard from './CategoryCard'
 import CategoryCardLoader from './Loader'
@@ -13,9 +13,9 @@ import Icon from 'react-native-vector-icons/AntDesign';
 const ListHeaderComponent = () => (
   <>
     <Carousel />
-    <View className='flex-row items-center justify-between px-4 pt-5'>
-      <Text className="text-xl italic font-medium">What are you looking for?</Text>
-      <TouchableOpacity className='gap-2 flex-row'><Text className='underline'>Show More</Text><Icon name="right" size={12} color="black" /></TouchableOpacity>
+    <View style={styles.headingContainer}>
+      <Text style={styles.heading}>What are you looking for?</Text>
+      <TouchableOpacity style={styles.button}><Text style={styles.buttonText}>Show More</Text></TouchableOpacity>
     </View>
   </>
 )
@@ -50,7 +50,7 @@ function HomPageCategories() {
       renderItem={({ item, index }) => <CategoryCard item={item} index={index} />}
       initialNumToRender={16}
       numColumns={4}
-      columnWrapperClassName='px-4 py-2 gap-3'
+      columnWrapperStyle={styles.columnWrapperStyle}
       ListHeaderComponent={ListHeaderComponent}
       ListEmptyComponent={() => (!isFetchingNextPage && !isFetching) && <View className='flex-1 px-4 py-3'><NoResult /></View>}
       ListFooterComponent={() => (isFetchingNextPage && isFetching) && <View className='flex-1 px-4 py-2'><CategoryCardLoader /></View>}
@@ -59,3 +59,32 @@ function HomPageCategories() {
 }
 
 export default HomPageCategories
+
+const styles = StyleSheet.create({
+  columnWrapperStyle: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    gap: 12
+  },
+  headingContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingTop: 20
+  },
+  heading:{
+    fontSize: 20,
+    lineHeight: 28,
+    fontWeight: 500,
+    fontStyle: 'italic'
+  },
+  button: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2
+  },
+  buttonText: {
+    textDecorationLine: 'underline'
+  }
+});

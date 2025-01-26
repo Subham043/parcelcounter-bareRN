@@ -11,7 +11,6 @@ import SearchCard from "@/components/SearchCard";
 import SearchCardLoader from "@/components/SearchCard/Loader";
 import NoResult from "@/components/NoResult";
 import { useNavigation } from "@react-navigation/native";
-import { Text } from "react-native-gesture-handler";
 
 
 function SearchHeader({ searchHandler, backButtonHandler }: { searchHandler: (e: string) => void, backButtonHandler: () => void }) {
